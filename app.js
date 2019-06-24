@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const userRouter = require('./router/api/user')
 const { mongodbURI } = require('./config/config')
 const jwt = require('jsonwebtoken')
+const passport = require('passport')
 
 const app = express()
 mongoose.connect(mongodbURI)
@@ -16,7 +17,8 @@ mongoose.connection.once('open', (res) => {
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/admin/api/', userRouter)
-
+app.use(passport.initialize())
+require('./config/passport')(passport)
 /**
  * app监听5000端口
  */
