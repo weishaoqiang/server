@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const userRouter = require('./router/api/user')
 const { mongodbURI } = require('./config/config')
+const jwt = require('jsonwebtoken')
 
 const app = express()
 mongoose.connect(mongodbURI)
