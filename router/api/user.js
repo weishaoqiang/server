@@ -21,7 +21,7 @@ router.post('/register', (req, res) => {
     newUser.save().then(function (product) {
       return res.json({ success: true, message: '注册成功,请登录！' })
     }).catch(err => {
-      return res.json({ success: false, message: '注册失败', data: res })
+      return res.json({ success: false, message: '注册失败', data: err })
     })
   })
 })
