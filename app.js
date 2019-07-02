@@ -2,12 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const userRouter = require('./router/api/user')
+const articalRouter = require('./router/api/artical')
+const uploadRouter = require('./router/api/upload')
 const { mongodbURI } = require('./config/config')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 
 const app = express()
-mongoose.connect(mongodbURI)
+app.all('*', function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  res.header('Access-Control-Allow-Methods', '*')
+  res.header('Content-Type', 'application/json;charset=utf-8')
+  next()
+})
 mongoose.connection.once('open', (res) => {
   console.log('数据库成功连接！')
 });
@@ -17,6 +26,8 @@ mongoose.connection.once('open', (res) => {
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/admin/api/', userRouter)
+app.use('/admin/api/', articalRouter)
+app.use('/admin/api/', uploadRouter)
 app.use(passport.initialize())
 require('./config/passport')(passport)
 /**
