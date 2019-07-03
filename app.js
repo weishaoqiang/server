@@ -23,8 +23,8 @@ mongoose.connection.once('open', (res) => {
 /**
  * bodyParser中间件 的注册一定要放在 路由（router）中间件的注册之前
  */
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }))
+app.use(bodyParser.json({ limit: '50mb' }))
 app.use('/admin/api/', userRouter)
 app.use('/admin/api/', articalRouter)
 app.use('/admin/api/', uploadRouter)
