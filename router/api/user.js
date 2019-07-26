@@ -10,11 +10,11 @@ const passport = require('passport')
  */
 router.post('/register', (req, res) => {
   User.findOne({ email: req.body.email }).then(user => {
-    if (user) return res.json({ success: true, message: '该邮箱已经被注册！' })
+    if (user) return res.json({ success: false, message: '该邮箱已经被注册！' })
     // 如果没有注册过，将密码进行加密，然后存入数据库中
     const password = md5.update(req.body.password).digest('hex')
     let newUser = new User({
-      name: req.body.name,
+      // name: req.body.name,
       email: req.body.email,
       password: password
     })

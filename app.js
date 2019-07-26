@@ -8,6 +8,12 @@ const { mongodbURI } = require('./config/config')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 
+mongoose.connect(mongodbURI, { useNewUrlParser: true })
+mongoose.connection.on('open', (err, res) => {
+  if (err) throw err
+  console.log('数据库成功连接！')
+})
+
 const app = express()
 app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -17,9 +23,6 @@ app.all('*', function (req, res, next) {
   res.header('Content-Type', 'application/json;charset=utf-8')
   next()
 })
-mongoose.connection.once('open', (res) => {
-  console.log('数据库成功连接！')
-});
 /**
  * bodyParser中间件 的注册一定要放在 路由（router）中间件的注册之前
  */
