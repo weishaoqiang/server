@@ -1,22 +1,18 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+
 const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  date: {
-    type: String,
-    default: Date.now()
-  }
+  uid: {type: String, required: true, index: true, unique: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  date: { type: String, default: Date.now() }
 })
+
+userSchema.statics = {
+  getUsers: function(params, cb) {
+    return this.find()
+    .exec(cb)
+  }
+}
 
 module.exports = User = mongoose.model("users", userSchema)
