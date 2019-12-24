@@ -8,6 +8,7 @@ const userSchema = new Schema({
   date: { type: String, default: Date.now() }
 })
 
+// 自定义查询方法
 userSchema.statics = {
   getUsers: function(params, cb) {
     return this.find()

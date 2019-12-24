@@ -44,6 +44,6 @@ require('./config/passport')(passport)
 /**
  * app监听5000端口
  */
-app.listen(5000, (res) => {
+app.listen(5000, '0.0.0.0', (res) => {
   console.log('server run in port 5000')
 })
